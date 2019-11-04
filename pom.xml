@@ -8,15 +8,19 @@
 		<version>2.2.0.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<docker.image.prefix>udonmez</docker.image.prefix>
+	</properties>
+
 	<groupId>com.ugurdonmez</groupId>
 	<artifactId>wallet</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>wallet</name>
 	<description>Demo project for Spring Boot</description>
-
-	<properties>
-		<java.version>1.8</java.version>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -68,6 +72,17 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.3.6</version>
+				<configuration>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+					<buildArgs>
+						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
